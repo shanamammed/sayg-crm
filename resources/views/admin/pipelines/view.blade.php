@@ -16,7 +16,14 @@
                    <ol class="breadcrumb float-right">
                     <button type="button" class="btn btn-gradient btn-rounded waves-light waves-effect w-md" onclick="add()">Add New Pipeline</button> <br>
                   </ol>
-                  <div class="clearfix"></div>
+                  <div class="clearfix">
+                    @if(Session::has('success'))
+                     <div class="alert">
+                      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                      <strong>Success!</strong> {{Session::get('success')}}
+                    </div>
+                      @endif
+                  </div>
                 </div>
               </div>
             </div>
@@ -75,6 +82,7 @@
                      <div class="col-12">
                          <label for="select">Name</label>
                          <input type="text" class="form-control" placeholder="pipeline Name" name="name" id="name" required>
+                         @error('name') <span class="error" style="color:red;">{{ $message }}</span> @enderror
                      </div>
                  </div>
                </div>
@@ -103,6 +111,7 @@
                        <label for="select">Name</label>
                        <input type="text" class="form-control" placeholder="pipeline Name" name="name" id="pipeline-name" required>
                        <input type="hidden" name="pipeline-id" id="pipeline-id">
+                       @error('name') <span class="error" style="color:red;">{{ $message }}</span> @enderror
                     </div>
                </div>
                  </div>

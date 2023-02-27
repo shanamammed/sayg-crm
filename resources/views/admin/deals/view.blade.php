@@ -18,7 +18,15 @@
                     <a href="{{ url('admin/deals/add') }}"><button type="button" class="btn btn-gradient btn-rounded waves-light waves-effect w-md" >Add New Deal</button></a>
                     @endif
                   </ol>
-                  <div class="clearfix"></div>
+                  <div class="clearfix">
+                     @if(Session::has('success'))
+                     <div class="alert">
+                      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                      <strong>Success!</strong> {{Session::get('success')}}
+                    </div>
+                      @endif
+                    
+                  </div>
                 </div>
               </div>
             </div>
@@ -56,7 +64,7 @@
                                 {{ $company->company_name }}<br>
                               @endforeach
                           </td>
-                          <td>{{ $deal->status  ? 'Open' : 'Closed' }}</td>
+                          <td>@if($deal->status=='1') Open @elseif($deal->status=='2') Won @else Lost @endif</td>
                           @if (Auth::guard('admin')->user()->canany(['deal-edit', 'deal-delete']))
                           <td>
                             
@@ -96,6 +104,7 @@
                <div class="modal-footer">
                    <button type="reset" class="btn w-lg btn-rounded btn-light waves-effect m-l-5" data-dismiss="modal">Back</button>
                   <form class="form-horizontal" action="{{ url('admin/deals/delete') }}" method="get">
+                    @csrf
                       <input type="hidden" name="deal_id" id="deal_id">
                      <button class="btn w-lg btn-rounded btn-primary waves-effect waves-light" type="submit">Delete</button>
                   </form>

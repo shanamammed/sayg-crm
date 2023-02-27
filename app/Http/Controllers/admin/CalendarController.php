@@ -21,17 +21,16 @@ class CalendarController extends Controller
     {
         // if (auth()->user()->can('calendar-list')) 
         // {
-            $recent_deals = DB::table('deals')
-                ->select('deals.*','stages.name as stage_name')
+            $recent_deals = Deal::select('deals.*','stages.name as stage_name')
                 ->join('stages','stages.id','=','deals.stage_id')
                 ->where('stages.name','!=','Won')
                 ->where('stages.name','!=','Lost')
                 ->orderBy('deals.id','desc')->limit(5)->get();
-            $appointments = DB::table('deals')->select('deals.*','stages.name as stage_name')
+            $appointments = Deal::select('deals.*','stages.name as stage_name')
                 ->join('stages','stages.id','=','deals.stage_id')->get();
             foreach($appointments as $appointment)
             {
-                $appointment->created_at = date('Y-m-d',strtotime($appointment->created_at));
+                $appointment->created_date = date('Y-m-d',strtotime($appointment->created_at));
             }
             return view('admin.calendar.view',compact('appointments','recent_deals'));
        //  }  

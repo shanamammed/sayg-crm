@@ -31,7 +31,7 @@ class PipelineController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),  [
-            'name' => 'required',
+            'name' => 'required|unique:pipelines,name',
         ]
         );
        
@@ -61,7 +61,7 @@ class PipelineController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(),  [
-            'name' => 'required'
+            'name' => 'required|unique:pipelines,name,'.$request->input('pipeline-id')
         ]
         );
        

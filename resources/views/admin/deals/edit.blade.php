@@ -82,6 +82,8 @@
                             @endif
                         </div>
                       </div><br>
+                      @if(count($deal_products) >0)
+                      @foreach($deal_products as $deal_product)
                       <div class="form-row" id="product-section">
                         
                        <div class="col-md-12">
@@ -95,8 +97,7 @@
                               <!-- <td width="10%">Delete</td> -->
                             </tr>
                           </thead>
-                          @if(count($deal_products) >0)
-                          @foreach($deal_products as $deal_product)
+                          
                           <tr>
                             <td><select class="form-control" name="product" id="product" onchange="GetproductByID()">
                                   <option value="">---Select product ---</option>
@@ -110,8 +111,29 @@
                             <td><input type="number" step="any" class="form-control quantity" name="total" id="total" value="{{$deal_product->total}}"></td>
                             <!-- <td style="text-align:center;"><td><a class='btn btn-link' onclick='deleteRow(this);'><i style='font-size:25px; color:red;' class='fa fa-trash'></i></a></td></td> -->
                           </tr>
-                          @endforeach
-                          @else
+                        </table>
+                        <!--  <div class="text-left">
+                          <button type="button" class="btn btn-link" onclick="addRowSize()"> <i class="fa fa-plus" aria-hidden="true"></i></button>
+                         </div> -->
+                       </div> 
+                      
+                      </div><br>
+                      @endforeach
+                      @else
+                       <div class="form-row" id="product-section" style="display:none;">
+                        
+                       <div class="col-md-12">
+                        <table id="contact-phone">
+                          <thead>
+                            <tr>
+                              <td width="50%">Product Name</td>
+                              <td width="20%">Unit Price (BHD)</td>
+                              <td width="20%">Quantity</td>
+                              <td width="20%">Total (BHD)</td>
+                              <!-- <td width="10%">Delete</td> -->
+                            </tr>
+                          </thead>
+                       
                           <tr>
                             <td><select class="form-control" name="product" id="product" onchange="GetproductByID(this)">
                                   <option value="">---Select product ---</option>
@@ -125,7 +147,6 @@
                             <td><input type="number" step="any" class="form-control quantity" name="total" id="total"></td>
                             <!-- <td style="text-align:center;"><td><a class='btn btn-link' onclick='deleteRow(this);'><i style='font-size:25px; color:red;' class='fa fa-trash'></i></a></td></td> -->
                           </tr>
-                          @endif
                         </table>
                         <!--  <div class="text-left">
                           <button type="button" class="btn btn-link" onclick="addRowSize()"> <i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -133,6 +154,7 @@
                        </div> 
                       
                       </div><br>
+                      @endif
 
                       <div class="form-row">
                         <div class="col-md-6">
@@ -149,7 +171,7 @@
                          <div class="col-md-6">
                           <label>Expected Close Date<span style="color: red;">*</span></label>
                           <div class="input-group">
-                            <input type="date" name="expected_close_date" class="form-control" value="{{ date('Y-m-d') }}" required> 
+                            <input type="date" name="expected_close_date" class="form-control" value="{{ $deal->expected_close_date }}" required> 
                             @error('email') <span class="error" style="color:red;">{{ $message }}</span> @enderror
                           </div>
                         </div>

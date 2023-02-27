@@ -19,7 +19,14 @@
                     <a href="{{ url('admin/roles/add') }}"><button type="button" class="btn btn-gradient btn-rounded waves-light waves-effect w-md" >Add New Role</button></a>
                     @endif
                   </ol>
-                  <div class="clearfix"></div>
+                  <div class="clearfix">
+                    @if(Session::has('success'))
+                     <div class="alert">
+                      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                      <strong>Success!</strong> {{Session::get('success')}}
+                    </div>
+                      @endif
+                  </div>
                 </div>
               </div>
             </div>

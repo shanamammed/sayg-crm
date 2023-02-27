@@ -34,9 +34,9 @@ class DealController extends Controller
                 ->orderBy('deals.id','desc')
                 ->get();
         foreach($deals as $deal) {
-            $deal->companies = DB::table('deal_contacts')->where('contacts.company_name')
-            ->join('contacts','contacts.id','=','deal_contacts.contact_id')
-            ->where('deal_contacts.deal_id',$deal->id)->get();
+            $deal->companies = DB::table('deal_contacts')->select('contact_id','first_name','last_name','company_name','company_domain')
+             ->join('contacts','contacts.id','=','deal_contacts.contact_id')
+             ->where('deal_id',$deal->id)->get();
         }       
         return view('admin.deals.view',compact('deals'));
         

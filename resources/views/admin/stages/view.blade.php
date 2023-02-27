@@ -17,7 +17,14 @@
                    <ol class="breadcrumb float-right">
                     <button type="button" class="btn btn-gradient btn-rounded waves-light waves-effect w-md" onclick="add()">Add New Stage</button> <br>
                   </ol>
-                  <div class="clearfix"></div>
+                  <div class="clearfix">
+                    @if(Session::has('success'))
+                     <div class="alert">
+                      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                      <strong>Success!</strong> {{Session::get('success')}}
+                    </div>
+                      @endif
+                  </div>
                 </div>
               </div>
             </div>
@@ -78,6 +85,7 @@
                      <div class="col-12">
                          <label for="select">Name</label>
                          <input type="text" class="form-control" placeholder="stage Name" name="name" id="name" required>
+                         @error('name') <span class="error" style="color:red;">{{ $message }}</span> @enderror
                      </div><br>
                      <div class="col-12">
                          <label for="select">Pipline</label>
@@ -114,6 +122,7 @@
                        <label for="select">Name</label>
                        <input type="text" class="form-control" placeholder="stage Name" name="name" id="stage-name" required>
                        <input type="hidden" name="stage-id" id="stage-id">
+                       @error('name') <span class="error" style="color:red;">{{ $message }}</span> @enderror
                     </div>
                </div>
                  </div>

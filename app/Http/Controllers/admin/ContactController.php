@@ -4,8 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use App\Models\admin\Role;
+use App\Models\admin\Permission;
 use App\Models\admin\Contact;
 use App\Models\admin\Company;
 use App\Models\admin\Source;

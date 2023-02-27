@@ -171,7 +171,7 @@
                         @foreach($appointments as $appointment)
                         {
                             title : '{{ $appointment->name.' - '.$appointment->stage_name}}',
-                            start : '{{ $appointment->created_at }}',
+                            start : '{{ $appointment->created_date }}',
                             
                             end: '{{ $appointment->expected_close_date }}',
                           

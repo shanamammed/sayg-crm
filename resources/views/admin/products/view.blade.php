@@ -18,7 +18,14 @@
                     <a href="{{ url('admin/products/add') }}"><button type="button" class="btn btn-gradient btn-rounded waves-light waves-effect w-md" >Add New Product</button></a>
                     @endif
                   </ol>
-                  <div class="clearfix"></div>
+                  <div class="clearfix">
+                    @if(Session::has('success'))
+                     <div class="alert">
+                      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                      <strong>Success!</strong> {{Session::get('success')}}
+                    </div>
+                      @endif
+                  </div>
                 </div>
               </div>
             </div>
@@ -55,10 +62,10 @@
                           @if (Auth::guard('admin')->user()->canany(['product-edit', 'product-delete']))
                           <td>
                             @if (Auth::guard('admin')->user()->can('product-edit'))
-                            <a href="{{ url('admin/products/edit', $product->id) }}"><button  class="btn btn-success btn-sm btn-rounded waves-light waves-effect"><i class="fas fa-edit" aria-hidden="true"></i></button></a>
+                            <a href="{{ url('admin/products/edit', $product->id) }}"><button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect"><i class="fas fa-edit" aria-hidden="true"></i></button></a>
                             @endif
                             @if (Auth::guard('admin')->user()->can('product-delete'))
-                             <button class="btn btn-success btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$product->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
+                             <button class="btn btn-primary btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$product->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
                             @endif 
                           </td>
                           @endif

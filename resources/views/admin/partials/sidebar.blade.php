@@ -14,24 +14,24 @@
                   </div>
 
                   <!-- item-->
-                  <a href="javascript:void(0);" class="dropdown-item notify-item">
+                 <!--  <a href="javascript:void(0);" class="dropdown-item notify-item">
                       <i class="fe-user"></i>
                       <span>Profile</span>
-                  </a>
+                  </a> -->
 
                   <!-- item-->
-                  <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <!-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                       <i class="fe-settings"></i>
                       <span>Settings</span>
-                  </a>
+                  </a> -->
 
                   <!-- item-->
-                  <a href="javascript:void(0);" class="dropdown-item notify-item">
+                 <!--  <a href="javascript:void(0);" class="dropdown-item notify-item">
                       <i class="fe-lock"></i>
                       <span>Lock Screen</span>
-                  </a>
+                  </a> -->
 
-                  <div class="dropdown-divider"></div>
+                  <!-- <div class="dropdown-divider"></div> -->
 
                   <!-- item-->
                   <a href="{{ route('logout') }}" class="dropdown-item notify-item">
@@ -53,7 +53,7 @@
               </span>
               <span class="logo-sm">
                   <!-- <span class="logo-sm-text-dark">U</span> -->
-                  <img src="{{ asset('/images/logo-sm.png') }}" alt="" height="28">
+                  <img src="{{ asset('/images/default.jpg') }}" alt="" height="28">
               </span>
           </a>
       </div>

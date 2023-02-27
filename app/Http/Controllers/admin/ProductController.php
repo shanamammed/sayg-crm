@@ -44,7 +44,7 @@ class ProductController extends Controller
     {
         $user = auth()->guard('admin')->user();
         $validator = Validator::make($request->all(),  [
-            'name' => 'required',
+            'name' => 'required|unique:products,name',
             'unit_price' => 'required|numeric',
             'direct_price' => 'nullable|numeric',
         ]);
@@ -105,7 +105,7 @@ class ProductController extends Controller
     {
         $user = auth()->guard('admin')->user();
         $validator = Validator::make($request->all(),  [
-            'name' => 'required',
+            'name' => 'required|unique:products,name,'.$id,
             'unit_price' => 'required|numeric',
             'direct_price' => 'nullable|numeric',
         ]);

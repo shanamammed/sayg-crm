@@ -45,6 +45,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('users/edit/{id}', [UserController::class, 'edit'])->name('edit');
     Route::post('users/update/{id}', [UserController::class, 'update'])->name('update');
     Route::get('users/delete', [UserController::class, 'destroy'])->name('delete');
+    Route::post('users/change_password', [UserController::class, 'change_password'])->name('change_password');
+
 
     Route::get('products', [ProductController::class, 'index'])->name('products');
     Route::get('products/add', [ProductController::class, 'create'])->name('add');
@@ -90,7 +92,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::post('deals/store', [DealController::class, 'store'])->name('store');
     Route::get('deals/edit/{id}', [DealController::class, 'edit'])->name('edit');
     Route::post('deals/update/{id}', [DealController::class, 'update'])->name('update');
-    Route::get('deals/delete/{id}', [DealController::class, 'destroy'])->name('delete');
+    Route::get('deals/delete', [DealController::class, 'destroy'])->name('delete');
     Route::get('deals/details/{id}', [DealController::class, 'show'])->name('details');
     Route::get('deals/get_product', [DealController::class, 'get_product'])->name('get_product');
     Route::get('deals/won', [DealController::class, 'won'])->name('won');

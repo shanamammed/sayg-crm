@@ -22,8 +22,8 @@ class DashboardController extends Controller
     {
         $stagges = Stage::select('id','name as stage_name')->get();
         foreach($stagges as $stage) {
-            $deals = DB::table('deals')->select('id')->where('stage_id',$stage->id)->get()->count();
-            $stage->deals = $deals;
+            $deals = DB::table('deals')->select('id')->where('stage_id',$stage->id)->get();
+            $stage->deals = $deals->count();
         }
         $stages= $stagges->pluck('stage_name','deals');
         

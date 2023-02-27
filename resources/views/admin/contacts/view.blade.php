@@ -18,7 +18,14 @@
                     <a href="{{ url('admin/contacts/add') }}"><button type="button" class="btn btn-gradient btn-rounded waves-light waves-effect w-md" >Add New Contact</button></a>
                     @endif
                   </ol>
-                  <div class="clearfix"></div>
+                  <div class="clearfix">
+                    @if(Session::has('success'))
+                     <div class="alert">
+                      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                      <strong>Success!</strong> {{Session::get('success')}}
+                    </div>
+                      @endif
+                  </div>
                 </div>
               </div>
             </div>
@@ -87,7 +94,7 @@
                </div>
                <div class="modal-footer">
                    <button type="reset" class="btn w-lg btn-rounded btn-light waves-effect m-l-5" data-dismiss="modal">Back</button>
-                  <form class="form-horizontal" action="{{ url('admin/companies/delete') }}" method="get">
+                  <form class="form-horizontal" action="{{ url('admin/contacts/delete') }}" method="get">
                       <input type="hidden" name="contact_id" id="contact_id">
                      <button class="btn w-lg btn-rounded btn-primary waves-effect waves-light" type="submit">Delete</button>
                   </form>

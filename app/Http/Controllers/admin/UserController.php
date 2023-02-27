@@ -173,4 +173,15 @@ class UserController extends Controller
         return redirect()->route('users')
                         ->with('success','User deleted successfully');
     }
+
+    public function change_password(Request $request)
+    {
+        $id = $request->input('u_id');
+        $password = $request->input('password');
+        $user = User::find($id);
+        $user->password = bcrypt($password);
+        $user->save();
+        return redirect()->route('users')
+                        ->with('success','Password changed successfully');
+    }
 }
