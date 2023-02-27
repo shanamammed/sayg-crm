@@ -2,8 +2,6 @@
 <html>
   <head>
     @include("admin.partials.header")
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    
   </head>
   <body>
     <div id="wrapper">
@@ -14,7 +12,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="page-title-box">
-                  <h4 class="page-title float-left">ADD DEAL</h4>
+                  <h4 class="page-title float-left">EDIT DEAL</h4>
                   <div class="clearfix"></div>
                 </div>
               </div>
@@ -53,7 +51,7 @@
                           <div class="input-group">
                             <select class="form-control" name="stage" required>
                               @foreach($stages as $stage)
-                               <option value="{{ $stage->id }}" <?php if($owner->stage_id==$deal_stage_id) {?> selected <?php };?>>{{ $stage->name }}</option>
+                               <option value="{{ $stage->id }}" <?php if($stage->id==$deal->stage_id) {?> selected <?php };?>>{{ $stage->name }}</option>
                               @endforeach
                             </select>
                             @error('email') <span class="error" style="color:red;">{{ $message }}</span> @enderror
@@ -73,6 +71,15 @@
                               <button type="button" class="btn btn-link" onclick="deleteProduct()"> Don't add Product</button>                            
                             </div>
                             <input type="hidden" name="add_value" id="add_value" value="1">
+                            @else
+                            <div class="text-right" id="add_product" >
+                              <button type="button" class="btn btn-link" onclick="addProduct()"> Add Product</button>
+                            </div>
+                            <div class="text-right" id="delete_product" style="display:none;">
+                              <button type="button" class="btn btn-link" onclick="deleteProduct()"> Don't add Product</button>                            
+                            </div>
+                            <input type="hidden" name="add_value" id="add_value" value="0">
+                            @endif
                         </div>
                       </div><br>
                       <div class="form-row" id="product-section">
@@ -88,8 +95,25 @@
                               <!-- <td width="10%">Delete</td> -->
                             </tr>
                           </thead>
+                          @if(count($deal_products) >0)
+                          @foreach($deal_products as $deal_product)
                           <tr>
                             <td><select class="form-control" name="product" id="product" onchange="GetproductByID()">
+                                  <option value="">---Select product ---</option>
+                                  @foreach($products as $product)
+                                   <option value="{{ $product->id }}" <?php if($product->id==$deal_product->product_id) {?> selected <?php };?>> {{ $product->name }}</option>
+                                  @endforeach
+                                </select>
+                            </td>
+                            <td><input type="number" step="any" class="form-control quantity" name="price" id="price" value="{{$deal_product->unit_price}}"></td>
+                            <td><input type="number" class="form-control quantity" name="quantity" id="quantity" oninput="GetTotal()" value="{{$deal_product->quantity}}"></td>
+                            <td><input type="number" step="any" class="form-control quantity" name="total" id="total" value="{{$deal_product->total}}"></td>
+                            <!-- <td style="text-align:center;"><td><a class='btn btn-link' onclick='deleteRow(this);'><i style='font-size:25px; color:red;' class='fa fa-trash'></i></a></td></td> -->
+                          </tr>
+                          @endforeach
+                          @else
+                          <tr>
+                            <td><select class="form-control" name="product" id="product" onchange="GetproductByID(this)">
                                   <option value="">---Select product ---</option>
                                   @foreach($products as $product)
                                    <option value="{{ $product->id }}" > {{ $product->name }}</option>
@@ -101,6 +125,7 @@
                             <td><input type="number" step="any" class="form-control quantity" name="total" id="total"></td>
                             <!-- <td style="text-align:center;"><td><a class='btn btn-link' onclick='deleteRow(this);'><i style='font-size:25px; color:red;' class='fa fa-trash'></i></a></td></td> -->
                           </tr>
+                          @endif
                         </table>
                         <!--  <div class="text-left">
                           <button type="button" class="btn btn-link" onclick="addRowSize()"> <i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -133,20 +158,22 @@
                         <div class="col-md-6">
                           <label>Contacts</label>
                           <div class="input-group">
-                            <select class="js-example-basic-multiple" name="contacts[]" multiple="multiple"> 
+                            <select class="select2 form-control select2-multiple" multiple="multiple" multiple data-placeholder="" name="contacts[]">
                                @foreach($contacts as $contact)
-                                <option value="{{$contact->id}}">{{$contact->first_name.' '.$contact->last_name}}</option>
+                                 @foreach($deal_contacts as $cont)
+                                    <option value="{{$contact->id}}" @if($contact->id == $cont->contact_id)selected="selected"@endif>{{$contact->first_name.' '.$contact->last_name}}</option>
+                                  @endforeach
                                 @endforeach
                             </select>
                           </div>
-                          @error('roles') <span class="error" style="color:red;">{{ $message }}</span> @enderror
+                          @error('contacts') <span class="error" style="color:red;">{{ $message }}</span> @enderror
                         </div>
                       </div><br>     
                   </div>
                 
                 <div class="form-row">
                   <div class="col-md-12 mt-4">
-                    <button type="submit" class="btn btn-success waves-light waves-effect w-md pull-right" id="submit-button" style="display:block;">Add</button>
+                    <button type="submit" class="btn btn-primary waves-light waves-effect w-md pull-right" id="submit-button" style="display:block;">Update</button>
                   </div>
                 </div> 
            
@@ -160,14 +187,9 @@
   </div>
   </body>
   @include("admin.partials.scripts")
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
   <script type="">
-    $(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-     });
-  </script>
-  <script type="">
-    function GetproductByID()
+      function GetproductByID()
       {    
         var id = document.getElementById('product').value;
         $.ajax({
@@ -177,6 +199,7 @@
           data : { id : id },
           success : function( data )
           {
+
              $('#price').val(data.unit_price);
             $('#amount').val(data.unit_price);
             

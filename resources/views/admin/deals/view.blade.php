@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    @include("admin.partials.header")
     @include("admin.partials.table-css")
   </head>
   <body>
@@ -34,12 +33,12 @@
                           <th width="10%">Owner</th>
                           <th width="15%">Deal Name</th>
                           <th width="10%">Stage</th>
-                          <th width="5%">Amount</th>
-                          <th width="15%">Expected Close Date</th>
-                          <th width="15%">Companies</th>
+                          <th width="10%">Amount</th>
+                          <th width="10%">Expected Close Date</th>
+                          <th width="10%">Companies</th>
                           <th width="10%">Status</th>
                           @if (Auth::guard('admin')->user()->canany(['deal-edit', 'deal-delete']))
-                          <th width="10%">Action</th>
+                          <th width="15%">Action</th>
                           @endif
                       </tr>
                     </thead>
@@ -60,11 +59,14 @@
                           <td>{{ $deal->status  ? 'Open' : 'Closed' }}</td>
                           @if (Auth::guard('admin')->user()->canany(['deal-edit', 'deal-delete']))
                           <td>
+                            
+                            <a href="{{ url('admin/deals/details', $deal->id) }}"><button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
+                         
                             @if (Auth::guard('admin')->user()->can('deal-edit'))
-                            <a href="{{ url('admin/deals/edit', $deal->id) }}"><button  class="btn btn-success btn-sm btn-rounded waves-light waves-effect"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+                            <a href="{{ url('admin/deals/edit', $deal->id) }}"><button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect"><i class="fas fa-edit" aria-hidden="true"></i></button></a>
                             @endif
                             @if (Auth::guard('admin')->user()->can('deal-delete'))
-                             <button class="btn btn-success btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$deal->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
+                             <button class="btn btn-primary btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$deal->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             @endif 
                           </td>
                           @endif
@@ -103,7 +105,6 @@
         </div>
 
   </body>
-  @include("admin.partials.scripts")
   @include("admin.partials.table-scripts")
   <!-- <script type="text/javascript">
     $('#datatable').DataTable({

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\DealController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\StageController;
 use App\Http\Controllers\Admin\PipelineController;
+use App\Http\Controllers\Admin\CalendarController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -92,7 +93,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('deals/delete/{id}', [DealController::class, 'destroy'])->name('delete');
     Route::get('deals/details/{id}', [DealController::class, 'show'])->name('details');
     Route::get('deals/get_product', [DealController::class, 'get_product'])->name('get_product');
-
+    Route::get('deals/won', [DealController::class, 'won'])->name('won');
+    Route::get('deals/lost', [DealController::class, 'lost'])->name('lost');
 
     Route::get('activities', [ActivityController::class, 'index'])->name('activities');
     Route::get('activities/add', [ActivityController::class, 'create'])->name('add');
@@ -101,4 +103,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::post('activities/update/{id}', [ActivityController::class, 'update'])->name('update');
     Route::get('activities/delete/{id}', [ActivityController::class, 'destroy'])->name('delete');
     Route::get('activities/details/{id}', [ActivityController::class, 'show'])->name('details');
+
+    Route::get('calendar', [CalendarController::class, 'index'])->name('calendar');
 });

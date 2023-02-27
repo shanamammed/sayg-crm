@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    
-<!-- Mirrored from coderthemes.com/abstack/layouts/blue/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Feb 2023 10:50:10 GMT -->
 <head>
         <meta charset="utf-8" />
         <title>CRM - SayG</title>

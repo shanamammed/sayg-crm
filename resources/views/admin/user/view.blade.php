@@ -52,10 +52,10 @@
                           @if (Auth::guard('admin')->user()->canany(['user-edit', 'user-delete']))
                           <td>
                             @if (Auth::guard('admin')->user()->can('user-edit'))
-                            <a href="{{ url('admin/users/edit', $user->id) }}"><button  class="btn btn-success btn-sm btn-rounded waves-light waves-effect"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+                            <a href="{{ url('admin/users/edit', $user->id) }}"><button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect"><i class="fas fa-edit" aria-hidden="true"></i></button></a>
                             @endif
                             @if (Auth::guard('admin')->user()->can('user-delete'))
-                             <button class="btn btn-success btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$user->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
+                             <button class="btn btn-primary btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$user->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
                             @endif 
                           </td>
                           @endif

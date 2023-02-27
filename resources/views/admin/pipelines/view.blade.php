@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    @include("admin.partials.header")
     @include("admin.partials.table-css")
   </head>
   <body>
@@ -42,10 +41,10 @@
                         <!--   @if (Auth::guard('admin')->user()->canany(['contact-edit', 'contact-delete'])) -->
                           <td>
                             <!-- @if (Auth::guard('admin')->user()->can('contact-edit')) -->
-                            <button  class="btn btn-success btn-sm btn-rounded waves-light waves-effect" onclick="edit('{{$pipeline->id}}')"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                            <button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect" onclick="edit('{{$pipeline->id}}')"><i class="fas fa-edit" aria-hidden="true"></i></button>
                           <!--   @endif
                             @if (Auth::guard('admin')->user()->can('contact-delete')) -->
-                             <button class="btn btn-success btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$pipeline->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
+                             <button class="btn btn-primary btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$pipeline->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
                             <!-- @endif  -->
                           </td>
                           <!-- @endif -->
@@ -140,7 +139,6 @@
         </div>
 
   </body>
-  @include("admin.partials.scripts")
   @include("admin.partials.table-scripts")
   <!-- <script type="text/javascript">
     $('#datatable').DataTable({

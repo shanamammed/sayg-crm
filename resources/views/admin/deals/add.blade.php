@@ -2,7 +2,6 @@
 <html>
   <head>
     @include("admin.partials.header")
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     
   </head>
   <body>
@@ -132,7 +131,7 @@
                         <div class="col-md-6">
                           <label>Contacts</label>
                           <div class="input-group">
-                            <select class="js-example-basic-multiple" name="contacts[]" multiple="multiple"> 
+                           <select class="select2 form-control select2-multiple" multiple="multiple" multiple data-placeholder="" name="contacts[]">
                                @foreach($contacts as $contact)
                                 <option value="{{$contact->id}}">{{$contact->first_name.' '.$contact->last_name}}</option>
                                 @endforeach
@@ -145,7 +144,7 @@
                 
                 <div class="form-row">
                   <div class="col-md-12 mt-4">
-                    <button type="submit" class="btn btn-success waves-light waves-effect w-md pull-right" id="submit-button" style="display:block;">Add</button>
+                    <button type="submit" class="btn btn-primary waves-light waves-effect w-md pull-right" id="submit-button" style="display:block;">Add</button>
                   </div>
                 </div> 
            
@@ -159,16 +158,12 @@
   </div>
   </body>
   @include("admin.partials.scripts")
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  <script type="">
-    $(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-     });
-  </script>
+
   <script type="">
     function GetproductByID()
       {    
         var id = document.getElementById('product').value;
+
         $.ajax({
           method: "GET",
           url: "{{ url('admin/deals/get_product') }}",
@@ -176,9 +171,13 @@
           data : { id : id },
           success : function( data )
           {
+   
+
              $('#price').val(data.unit_price);
             $('#amount').val(data.unit_price);
             
+          },error(){
+            alert('error')
           }
         });
        }

@@ -2,8 +2,7 @@
 <html>
   <head>
     @include("admin.partials.header")
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    
+  
   </head>
   <body>
     <div id="wrapper">
@@ -47,7 +46,7 @@
                         <div class="col-md-6">
                           <label>User Roles<span style="color: red;">*</span></label>
                           <div class="input-group">
-                            <select class="js-example-basic-multiple" name="roles[]" multiple="multiple" required> 
+                            <select class="select2 form-control select2-multiple" multiple="multiple" multiple data-placeholder="" name="roles[]"> 
                               @foreach($roles as $role)
                                 <option value="{{ $role->id }}"  @if(in_array($role->id, $userRole)) selected @endif>{{ $role->name }}</option>
                                @endforeach
@@ -69,7 +68,7 @@
                 
                 <div class="form-row">
                   <div class="col-md-12 mt-4">
-                    <button type="submit" class="btn btn-success waves-light waves-effect w-md pull-right" id="submit-button" style="display:block;">Add</button>
+                    <button type="submit" class="btn btn-primary waves-light waves-effect w-md pull-right" id="submit-button" style="display:block;">Update</button>
                   </div>
                 </div> 
            
@@ -83,10 +82,4 @@
   </div>
   </body>
   @include("admin.partials.scripts")
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  <script type="">
-    $(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
-     });
-  </script>
 </html>

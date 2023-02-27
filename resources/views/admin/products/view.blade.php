@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    @include("admin.partials.header")
     @include("admin.partials.table-css")
   </head>
   <body>
@@ -56,7 +55,7 @@
                           @if (Auth::guard('admin')->user()->canany(['product-edit', 'product-delete']))
                           <td>
                             @if (Auth::guard('admin')->user()->can('product-edit'))
-                            <a href="{{ url('admin/products/edit', $product->id) }}"><button  class="btn btn-success btn-sm btn-rounded waves-light waves-effect"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+                            <a href="{{ url('admin/products/edit', $product->id) }}"><button  class="btn btn-success btn-sm btn-rounded waves-light waves-effect"><i class="fas fa-edit" aria-hidden="true"></i></button></a>
                             @endif
                             @if (Auth::guard('admin')->user()->can('product-delete'))
                              <button class="btn btn-success btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$product->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
@@ -98,7 +97,6 @@
         </div>
 
   </body>
-  @include("admin.partials.scripts")
   @include("admin.partials.table-scripts")
   <!-- <script type="text/javascript">
     $('#datatable').DataTable({

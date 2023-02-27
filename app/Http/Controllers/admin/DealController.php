@@ -139,7 +139,20 @@ class DealController extends Controller
      */
     public function show($id)
     {
-        //
+        $deal    = Deal::select('deals.*','stages.name as stage_name','pipelines.name as pipeline','users.name as user_name')
+           ->join('pipelines','pipelines.id','=','deals.pipeline_id')
+           ->join('stages','stages.id','=','deals.stage_id')
+           ->join('users','users.id','=','deals.user_id')
+           ->where('deals.id',$id)->first();
+        $user    = auth::guard('admin')->user()->id;
+
+        $deal_contacts = DB::table('deal_contacts')->select('contact_id','first_name','last_name','company_name','company_domain')
+             ->join('contacts','contacts.id','=','deal_contacts.contact_id')
+             ->where('deal_id',$id)->get();
+        $deal_products = DB::table('deal_products')->select('deal_products.*','products.name')
+             ->join('products','products.id','=','deal_products.product_id')
+             ->where('deal_id',$id)->get();
+        return view('admin.deals.details',compact('deal','user','deal_contacts','deal_products'));
     }
 
     /**
@@ -159,8 +172,9 @@ class DealController extends Controller
         $company_deals = DB::table('deal_companies')->select('company_id')->where('deal_id',$id)->get();
         $contacts = Contact::select('id','first_name','last_name')->orderBy('first_name','asc')->get();
         $deal_contacts = DB::table('deal_contacts')->select('contact_id')->where('deal_id',$id)->get();
-        $deal_products = DB::table('deal_products')->select('product_id')->where('deal_id',$id)->get();
-        return view('admin.deals.edit',compact('deal','user','owners','companies','contacts','deal_contacts','company_deals','stages','pipeline','deal_products'));
+        $deal_products = DB::table('deal_products')->select('*')->where('deal_id',$id)->get();
+        $products = Product::orderBy('id','desc')->get(); 
+        return view('admin.deals.edit',compact('deal','user','owners','companies','contacts','deal_contacts','company_deals','stages','pipeline','deal_products','products'));
     }
 
     /**
@@ -211,16 +225,17 @@ class DealController extends Controller
                     }
                 }
                 
-                DB::table('deal_companies')->where('deal_id',$id)->delete();
-                if($request->companies)
+                if($request->input('add_value')=='1')
                 {
-                    foreach($request->companies as $company) {
-                        DB::table('deal_companies')
-                            ->insert(['company_id' => $company,
-                                      'deal_id' => $deal->id
+                    DB::table('deal_products')->where('deal_id',$id)->delete();
+                    DB::table('deal_products')
+                            ->insert(['deal_id' => $deal->id,
+                                      'product_id' => $request->input('product'),
+                                      'unit_price' => $request->input('price'),
+                                      'quantity' => $request->input('quantity'),
+                                      'total' => $request->input('total')
                                      ]);
-                    }
-                }
+                } 
                 return redirect()->route('deals')
                             ->with('success','Deal updated successfully');
             }  
@@ -234,6 +249,8 @@ class DealController extends Controller
     
     public function get_product(Request $request)
     {  
+
+       
         $id= $request->input('id');
         $data = Product::find($id);
         print_r(json_encode($data));
@@ -251,5 +268,27 @@ class DealController extends Controller
         Deal::find($id)->delete();
         return redirect()->route('deals')
                         ->with('success','Deal deleted successfully');
+    }
+
+    public function won(Request $request)
+    {
+        $id = $request->input('won_id');
+        $deal=Deal::find($id);
+        $deal->status = 2;
+        $deal->save();
+        return redirect()->route('deals')
+                        ->with('success','Deal marked as won successfully');
+    }
+
+    public function lost(Request $request)
+    {
+        $id = $request->input('lost_id');
+        $reason = $request->input('lost_reason');
+        $deal=Deal::find($id);
+        $deal->status = 3;
+        $deal->lost_reason = $reason;
+        $deal->save();
+        return redirect()->route('deals')
+                        ->with('success','Deal marked as lost successfully');
     }
 }

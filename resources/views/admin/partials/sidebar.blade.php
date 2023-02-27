@@ -65,7 +65,7 @@
               </button>
           </li>
 
-          <li class="d-none d-sm-block">
+         <!--  <li class="d-none d-sm-block">
               <form class="app-search">
                   <div class="app-search-box">
                       <div class="input-group">
@@ -78,7 +78,7 @@
                       </div>
                   </div>
               </form>
-          </li>
+          </li> -->
 
       </ul>
   </div>
@@ -101,6 +101,7 @@
                           <i class="fe-airplay"></i><span> Dashboard </span>
                       </a>
                   </li>
+                  @if (Auth::guard('admin')->user()->can('deal-list'))
                   <li>
                       <a href="#"><i class="fa fa-gift"></i> <span> Deals </span> <span class="menu-arrow"></span></a>
                       <ul class="nav-second-level" aria-expanded="false">
@@ -109,30 +110,39 @@
                           <li><a href="{{ route('pipelines') }}">Manage Pipelines</a></li>
                       </ul>
                   </li>
+                  @endif
                   <!-- <li>
                       <a href="{{ route('companies') }}">
                           <i class="fe-briefcase"></i><span> Companies </span>
                       </a>
                   </li> -->
+                  @if (Auth::guard('admin')->user()->can('contact-list'))
                   <li>
-                      <a href="#"><i class="fa fa-phone"></i> <span> Contacts </span> <span class="menu-arrow"></span></a>
-                      <ul class="nav-second-level" aria-expanded="false">
+                      <a href="{{ route('contacts') }}"><i class="fa fa-phone"></i> <span> Contacts </span></a>
+                      <!-- <ul class="nav-second-level" aria-expanded="false">
                           <li><a href="{{ route('contacts') }}">Manage Contacts</a></li>
                           <li><a href="{{ url('/admin/contacts/sources') }}">Manage Sources</a></li>
-                      </ul>
+                      </ul> -->
                   </li>
+                  @endif
+
+                  @if (Auth::guard('admin')->user()->can('product-list'))
                   <li>
                       <a href="{{ url('/admin/products') }}">
                           <i class="fe-box"></i></i><span> Products </span>
                       </a>
                   </li>
-                  
+                  @endif
+
+                  @if (Auth::guard('admin')->user()->can('calendar-list'))
                   <li>
-                      <a href="{{ url('/admin/dashboard') }}">
+                      <a href="{{ url('/admin/calendar') }}">
                           <i class="fe-clock"></i><span> Calendar </span>
                       </a>
                   </li>
-                 
+                  @endif
+
+                  @if (Auth::guard('admin')->user()->can('user-list'))
                   <li>
                       <a href="#"><i class="fa fa-users"></i> <span> Users </span> <span class="menu-arrow"></span></a>
                       <ul class="nav-second-level" aria-expanded="false">
@@ -140,6 +150,7 @@
                           <li><a href="{{ route('roles') }}">Manage Roles</a></li>
                       </ul>
                   </li>
+                  @endif
               </ul>
 
           </div>

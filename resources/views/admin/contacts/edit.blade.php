@@ -106,7 +106,7 @@
                 
                 <div class="form-row">
                   <div class="col-md-12 mt-4">
-                    <button type="submit" class="btn btn-success waves-light waves-effect w-md pull-right" id="submit-button" style="display:block;">Update</button>
+                    <button type="submit" class="btn btn-primary waves-light waves-effect w-md pull-right" id="submit-button" style="display:block;">Update</button>
                   </div>
                 </div> 
            

@@ -53,26 +53,21 @@
                                     <div class="card-box">
                                         <h4 class="header-title"><h4 class="header-title">Deals By Stages ({{ date('Y') }}) </h4></h4>
     
-                                        <canvas id="bar" height="300" class="mt-4"></canvas>
+                                        <canvas id="bar" height="350" class="mt-4"></canvas>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">  
-                                    <div class="card-box">
-                                        <h4 class="header-title">Deals ({{ date('Y') }})</h4>   
-                                         <!-- <canvas id="pieChart"></canvas>  --> 
-                                         <canvas id="pie" height="300" class="mt-4"></canvas>  
-                                    </div>
-                                </div> 
+    
                                
                             </div>
                             <div class="row">
-                               <div class="col-lg-6">
-                                  <div class="card-box">
-                                    <h4 class="header-title">Contact ({{date('d-M-Y',strtotime($weekStartDate))}} - {{date('d-M-Y',strtotime($weekEndDate))}}</h4>
-
-                                    <canvas id="lineChart" height="250" class="mt-4"></canvas>
-                                  </div>
-                               </div>
+                            <!--     <div class="col-lg-6">
+                                    <div class="card-box">
+                                        <h4 class="header-title">Deals By Stages ({{ date('Y') }}) </h4>
+    
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+                                </div> -->
+                               
                                 <div class="col-lg-6">
                                     <div class="card-box">
                                         <h4 class="header-title mb-3">Recent added deals</h4>    
@@ -104,7 +99,7 @@
                                                     <th>Total Amount</th>
                                                 </thead>
                                                 <tbody>
-                                                    @if(count($agents)>0)
+                                                    @if(count($expiring_deals)>0)
                                                     @foreach($agents as $agent)
                                                     <tr>
                                                         <td>{{$agent->user_name}}</td>
@@ -124,7 +119,31 @@
     
                                     </div>
                                 </div>
-                                 <div class="col-lg-6">
+                                <div class="col-lg-6">  
+                                    <div class="card-box">
+                                        <h4 class="header-title">Deals ({{ date('Y') }})</h4>   
+                                         <!-- <canvas id="pieChart"></canvas>  --> 
+                                         <canvas id="pie" height="300" class="mt-4"></canvas>  
+                                    </div>
+                                </div> 
+                            </div>
+
+                           <div class="row">  
+                                <div class="col-lg-6">
+                                    <!-- <div class="card-box">
+                                        <h4 class="header-title">Contacts ({{date('d-M-Y',strtotime($weekStartDate))}} - {{date('d-M-Y',strtotime($weekEndDate))}}</h4>
+    
+                                        <canvas id="lineChart" class="mt-4"></canvas>
+                                    </div> -->
+                                     
+                                        <div class="card-box">
+                                            <h4 class="header-title">({{date('d-M-Y',strtotime($weekStartDate))}} - {{date('d-M-Y',strtotime($weekEndDate))}}</h4>
+        
+                                            <canvas id="lineChart" height="300" class="mt-4"></canvas>
+                                        </div>
+                                   
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="card-box">
                                         <h4 class="header-title mb-3">Recently expiring deals</h4>    
                                         <div class="inbox-widget slimscroll" style="max-height: 370px;">
@@ -148,7 +167,11 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!-- end row -->
+     
+                            <!-- end row -->
+    
+                        
                     </div> <!-- end container-fluid -->
 
                 </div> <!-- end content -->
@@ -179,7 +202,93 @@
 
         <!-- App js -->
         <script src="{{ asset('/js/app.min.js') }}"></script>
-    
+        <script>
+           const ctx = document.getElementById('myChart');
+           var labels =  {{ Js::from($labels) }};
+           var stages =  {{ Js::from($data) }};
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Deals',
+                data: stages,
+                backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(255, 159, 64, 0.2)',
+                      'rgba(255, 205, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(201, 203, 207, 0.2)'
+                    ],
+                borderColor: [
+                      'rgb(255, 99, 132)',
+                      'rgb(255, 159, 64)',
+                      'rgb(255, 205, 86)',
+                      'rgb(75, 192, 192)',
+                      'rgb(54, 162, 235)',
+                      'rgb(153, 102, 255)',
+                      'rgb(201, 203, 207)'
+                    ],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+
+           const config = {
+                type: 'bar',
+                data: data,
+                options: {}
+              };
+          // === include 'setup' then 'config' above ===
+
+          var myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+          );
+
+        </script>
+
+        <script type="text/javascript">
+
+        const dataPie = {
+          labels: [
+            'Open',
+            'Won',
+            'Lost'
+          ],
+          datasets: [{
+            label: 'My First Dataset',
+            data: [{{$active_deals}}, {{$won_deals}}, {{$lost_deals}}],
+            backgroundColor: [
+              'rgb(255, 99, 132)',
+              'rgb(54, 162, 235)',
+              'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+          }]
+        };
+
+         const configPie = {
+                type: 'pie',
+                data: dataPie,
+                options: {}
+              };
+        
+        var pieChart = new Chart(
+            document.getElementById('pieChart'),
+            configPie
+          );
+       </script>
        <script type="text/javascript">
         var linelabels =  {{ Js::from($line_labels) }};
         var contacts =  {{ Js::from($line_data) }};
@@ -271,7 +380,7 @@
                         label: "Deals",
                         backgroundColor: "rgba(60, 134, 216, 0.3)",
                         borderColor: "#3c86d8",
-                        borderWidth: 1,
+                        borderWidth: 2,
                         hoverBackgroundColor: "rgba(60, 134, 216, 0.7)",
                         hoverBorderColor: "#3c86d8",
                         data: stages
