@@ -14,7 +14,28 @@
         <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+        <style>
+            .alert {
+              padding: 20px;
+              background-color: #FF0000;
+              color: white;
+            }
 
+            .closebtn {
+              margin-left: 15px;
+              color: white;
+              font-weight: bold;
+              float: right;
+              font-size: 22px;
+              line-height: 20px;
+              cursor: pointer;
+              transition: 0.3s;
+            }
+
+            .closebtn:hover {
+              color: black;
+            }
+        </style>
     </head>
 
     <body class="authentication-bg bg-gradient">
@@ -24,12 +45,17 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8 col-lg-6 col-xl-5">
                             <div class="card bg-pattern">
-    
+                                 @if(Session::has('error'))
+                                 <div class="alert">
+                                  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                                  <strong>Error!</strong> {{Session::get('error')}}
+                                </div>
+                                @endif
                                 <div class="card-body p-4">
                                     
                                     <div class="text-center w-75 m-auto">
                                         <a href="index-2.html">
-                                            <span><img src="{{ asset('/images/logo.png') }}" alt="" height="18"></span>
+                                            <span><img src="{{ asset('/images/logo.jpg') }}" alt="" height="18"></span>
                                         </a>
                                         <h5 class="text-uppercase text-center font-bold mt-4">Sign In</h5>
 
@@ -40,11 +66,13 @@
                                         <div class="form-group mb-3">
                                             <label for="emailaddress">Email address</label>
                                             <input class="form-control" type="email" name="email" id="emailaddress" required="" placeholder="Enter your email">
+                                            @error('email') <span class="error" style="color:red;">{{ $message }}</span> @enderror
                                         </div>
     
                                         <div class="form-group mb-3">
                                             <label for="password">Password</label>
                                             <input class="form-control" type="password" required="" name="password" id="password" placeholder="Enter your password">
+                                            @error('password') <span class="error" style="color:red;">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="form-group mb-0 text-center">
                                             <button class="btn btn-gradient btn-block" type="submit"> Log In </button>

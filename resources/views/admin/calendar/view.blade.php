@@ -10,7 +10,7 @@
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" href="{{ asset('/images/default.jpg') }}">
 
         <!-- Plugin css -->
         <link href="{{ asset('/libs/fullcalendar/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />

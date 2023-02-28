@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    @include("admin.partials.header")
     @include("admin.partials.table-css")
   </head>
   <body>
@@ -15,7 +14,9 @@
                 <div class="page-title-box">
                   <h4 class="page-title float-left">STAGES</h4>
                    <ol class="breadcrumb float-right">
-                    <button type="button" class="btn btn-gradient btn-rounded waves-light waves-effect w-md" onclick="add()">Add New Stage</button> <br>
+                    @if (Auth::guard('admin')->user()->can('stage-create'))
+                    <a href="{{ url('admin/stages/add') }}"><button type="button" class="btn btn-gradient btn-rounded waves-light waves-effect w-md">Add New Stage</button></a> <br>
+                    @endif
                   </ol>
                   <div class="clearfix">
                     @if(Session::has('success'))
@@ -38,9 +39,9 @@
                       <tr>
                           <th>Stage</th>
                           <th>Pipeline</th>
-                          <!-- @if (Auth::guard('admin')->user()->canany(['contact-edit', 'contact-delete'])) -->
+                          @if (Auth::guard('admin')->user()->canany(['stage-edit', 'stage-delete']))
                           <th>Action</th>
-                          <!-- @endif -->
+                          @endif
                       </tr>
                     </thead>
                     <tbody>
@@ -48,16 +49,16 @@
                         <tr>
                           <td>{{ $stage->name }}</td>
                           <td>{{ $stage->pipeline }}</td>
-                        <!--   @if (Auth::guard('admin')->user()->canany(['contact-edit', 'contact-delete'])) -->
+                          @if (Auth::guard('admin')->user()->canany(['stage-edit', 'stage-delete']))
                           <td>
-                            <!-- @if (Auth::guard('admin')->user()->can('contact-edit')) -->
-                            <button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect" onclick="edit('{{$stage->id}}')"><i class="fas fa-edit" aria-hidden="true"></i></button>
-                          <!--   @endif
-                            @if (Auth::guard('admin')->user()->can('contact-delete')) -->
+                            @if (Auth::guard('admin')->user()->can('stage-edit'))
+                            <a href="{{ url('admin/stages/edit/'.$stage->id) }}"><button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect"><i class="fas fa-edit" aria-hidden="true"></i></button></a>
+                            @endif
+                            @if (Auth::guard('admin')->user()->can('stage-delete'))
                              <button class="btn btn-primary btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$stage->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
-                            <!-- @endif  -->
+                            @endif 
                           </td>
-                          <!-- @endif -->
+                          @endif
                         </tr>
                       @endforeach 
                     </tbody>
@@ -159,7 +160,6 @@
         </div>
 
   </body>
-  @include("admin.partials.scripts")
   @include("admin.partials.table-scripts")
   <!-- <script type="text/javascript">
     $('#datatable').DataTable({

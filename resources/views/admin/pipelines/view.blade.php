@@ -14,7 +14,9 @@
                 <div class="page-title-box">
                   <h4 class="page-title float-left">PIPELINES</h4>
                    <ol class="breadcrumb float-right">
+                    @if (Auth::guard('admin')->user()->can('pipeline-create'))
                     <button type="button" class="btn btn-gradient btn-rounded waves-light waves-effect w-md" onclick="add()">Add New Pipeline</button> <br>
+                    @endif
                   </ol>
                   <div class="clearfix">
                     @if(Session::has('success'))
@@ -36,25 +38,25 @@
                     <thead>
                       <tr>
                           <th>Pipeline</th>
-                          <!-- @if (Auth::guard('admin')->user()->canany(['contact-edit', 'contact-delete'])) -->
+                          @if (Auth::guard('admin')->user()->canany(['pipeline-edit', 'pipeline-delete']))
                           <th>Action</th>
-                          <!-- @endif -->
+                          @endif
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($pipelines as $pipeline)
                         <tr>
                           <td>{{ $pipeline->name }}</td>
-                        <!--   @if (Auth::guard('admin')->user()->canany(['contact-edit', 'contact-delete'])) -->
+                          @if (Auth::guard('admin')->user()->canany(['pipeline-edit', 'pipeline-delete']))
                           <td>
-                            <!-- @if (Auth::guard('admin')->user()->can('contact-edit')) -->
+                            @if (Auth::guard('admin')->user()->can('pipeline-edit'))
                             <button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect" onclick="edit('{{$pipeline->id}}')"><i class="fas fa-edit" aria-hidden="true"></i></button>
-                          <!--   @endif
-                            @if (Auth::guard('admin')->user()->can('contact-delete')) -->
+                            @endif
+                            @if (Auth::guard('admin')->user()->can('pipeline-delete'))
                              <button class="btn btn-primary btn-sm btn-rounded waves-light waves-effect" onclick="del('{{$pipeline->id}}')"><i class="fa fa-trash" aria-hidden="true"></i></button></a>
-                            <!-- @endif  -->
+                            @endif 
                           </td>
-                          <!-- @endif -->
+                          @endif
                         </tr>
                       @endforeach 
                     </tbody>

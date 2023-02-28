@@ -20,15 +20,14 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $stagges = Stage::select('id','name as stage_name')->get();
-        foreach($stagges as $stage) {
-            $deals = DB::table('deals')->select('id')->where('stage_id',$stage->id)->get();
-            $stage->deals = $deals->count();
+        $stages = Stage::select('id','name as stage_name')->get();
+        foreach($stages as $stage) {
+            $stage->deals_count = $stage->deals->count();
         }
-        $stages= $stagges->pluck('stage_name','deals');
+        // $stages= $stages->pluck('deals_count');
         
-        $labels = $stages->values();
-        $data = $stages->keys();
+        $labels = $stages->pluck('stage_name');
+        $data = $stages->pluck('deals_count');
         // print_r($data);
         $active_deals = Deal::select('id')->where('status',1)->whereYear('created_at',date('Y'))->get()->count();
         $lost_deals = Deal::select('id')->where('status',3)->whereYear('created_at',date('Y'))->get()->count();

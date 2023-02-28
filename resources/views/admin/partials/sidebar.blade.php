@@ -48,7 +48,7 @@
       <div class="logo-box">
           <a href="index-2.html" class="logo text-center">
               <span class="logo-lg">
-                  <img src="{{ asset('/images/logo-light.png') }}" alt="" height="16">
+                  <img src="{{ asset('/images/logo.jpg') }}" alt="" height="16">
                   <!-- <span class="logo-lg-text-light">UBold</span> -->
               </span>
               <span class="logo-sm">
@@ -106,8 +106,12 @@
                       <a href="#"><i class="fa fa-gift"></i> <span> Deals </span> <span class="menu-arrow"></span></a>
                       <ul class="nav-second-level" aria-expanded="false">
                           <li><a href="{{ route('deals') }}">Manage Deals</a></li>
+                          @if (Auth::guard('admin')->user()->can('stage-list'))
                           <li><a href="{{ route('stages') }}">Manage Stages</a></li>
+                          @endif
+                          @if (Auth::guard('admin')->user()->can('pipeline-list'))
                           <li><a href="{{ route('pipelines') }}">Manage Pipelines</a></li>
+                          @endif
                       </ul>
                   </li>
                   @endif

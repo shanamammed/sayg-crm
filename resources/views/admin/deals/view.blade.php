@@ -45,7 +45,7 @@
                           <th width="10%">Expected Close Date</th>
                           <th width="10%">Companies</th>
                           <th width="10%">Status</th>
-                          @if (Auth::guard('admin')->user()->canany(['deal-edit', 'deal-delete']))
+                          @if (Auth::guard('admin')->user()->canany(['deal-details','deal-edit', 'deal-delete']))
                           <th width="15%">Action</th>
                           @endif
                       </tr>
@@ -65,11 +65,11 @@
                               @endforeach
                           </td>
                           <td>@if($deal->status=='1') Open @elseif($deal->status=='2') Won @else Lost @endif</td>
-                          @if (Auth::guard('admin')->user()->canany(['deal-edit', 'deal-delete']))
+                          @if (Auth::guard('admin')->user()->canany(['deal-details','deal-edit', 'deal-delete']))
                           <td>
-                            
+                            @if (Auth::guard('admin')->user()->can('deal-details'))
                             <a href="{{ url('admin/deals/details', $deal->id) }}"><button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect"><i class="fa fa-eye" aria-hidden="true"></i></button></a>
-                         
+                            @endif
                             @if (Auth::guard('admin')->user()->can('deal-edit'))
                             <a href="{{ url('admin/deals/edit', $deal->id) }}"><button  class="btn btn-primary btn-sm btn-rounded waves-light waves-effect"><i class="fas fa-edit" aria-hidden="true"></i></button></a>
                             @endif

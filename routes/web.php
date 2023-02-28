@@ -76,9 +76,11 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('contacts/delete_source', [ContactController::class, 'delete_source'])->name('delete_source');
 
     Route::get('stages', [StageController::class, 'index'])->name('stages');
+    Route::get('stages/add', [StageController::class, 'create'])->name('add');
     Route::get('stages/details', [StageController::class, 'details'])->name('details');
     Route::post('stages/store', [StageController::class, 'store'])->name('store');
-    Route::post('stages/update', [StageController::class, 'update'])->name('update');
+    Route::post('stages/update/{id}', [StageController::class, 'update'])->name('update');
+    Route::get('stages/edit/{id}', [StageController::class, 'edit'])->name('edit');
     Route::get('stages/delete', [StageController::class, 'delete'])->name('delete');
 
     Route::get('pipelines', [PipelineController::class, 'index'])->name('pipelines');

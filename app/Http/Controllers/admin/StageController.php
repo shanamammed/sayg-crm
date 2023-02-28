@@ -24,6 +24,19 @@ class StageController extends Controller
         $pipelines = Pipeline::orderBy('id','desc')->get();  
         return view('admin.stages.view',compact('stages','pipelines'));
     }
+    
+    public function create()
+    {
+        $pipelines = Pipeline::orderBy('id','desc')->get();  
+        return view('admin.stages.add',compact('pipelines'));
+    }
+    
+    public function edit($id)
+    {
+        $stage = Stage::find($id);
+        $pipelines = Pipeline::orderBy('id','desc')->get();
+        return view('admin.stages.edit',compact('stage','pipelines'));
+    }
 
     public function details(Request $request)
     {  
@@ -63,10 +76,10 @@ class StageController extends Controller
         }
     }  
 
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
         $validator = Validator::make($request->all(),  [
-            'name' => 'required|unique:stages,name,'.$request->input('stage-id')
+            'name' => 'required|unique:stages,name,'.$id
         ]
         );
        
@@ -76,7 +89,7 @@ class StageController extends Controller
                         ->withErrors($validator);
         }
         else{            
-            $stage = Stage::find($request->input('stage-id'));
+            $stage = Stage::find($id);
             $stage->name = $request->input('name');
             $stage->pipeline_id = $request->input('pipeline_id');
             $stage->updated_at = date('Y-m-d H:i:s');  

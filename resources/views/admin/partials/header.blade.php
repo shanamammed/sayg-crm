@@ -5,7 +5,7 @@
 <meta content="Coderthemes" name="author" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- App favicon -->
-<link rel="shortcut icon" href="{{ asset('/images/favicon.ico') }}">
+<link rel="shortcut icon" href="{{ asset('/images/default.jpg') }}">
 
 <link href="{{ asset('/libs/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet" />
 <link href="{{ asset('/libs/switchery/switchery.min.css') }}" rel="stylesheet" type="text/css" />

@@ -24,7 +24,7 @@ class LoginController extends Controller
             $user = auth()->guard('admin')->user();
                 return redirect()->route('dashboard')->with('success','You are Logged in sucessfully.');
         }else {
-            return back()->with('error','Whoops! invalid email and password.');
+            return back()->with('error','Invalid email and password.');
         }
     }
 
